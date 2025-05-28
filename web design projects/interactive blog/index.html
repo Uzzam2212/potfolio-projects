@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech Insights | Interactive Blog</title>
+    <style>
+        /* Base Styles */
+        :root {
+            --primary: #4a6bff;
+            --secondary: #f8f9fa;
+            --dark: #212529;
+            --light: #f8f9fa;
+            --gray: #6c757d;
+            --success: #28a745;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* Header */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 25px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        .menu-toggle {
+            display: none;
+            cursor: pointer;
+            font-size: 24px;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #4a6bff 0%, #3a5bef 100%);
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+        
+        .search-bar {
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .search-bar input {
+            width: 100%;
+            padding: 15px 20px;
+            border-radius: 50px;
+            border: none;
+            font-size: 1rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .search-bar button {
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .search-bar button:hover {
+            background-color: #3a5bef;
+        }
+        
+        /* Main Content */
+        .main-content {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        /* Articles */
+        .articles {
+            flex: 2;
+        }
+        
+        .article-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .article-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .article-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .article-content {
+            padding: 25px;
+        }
+        
+        .article-meta {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        .article-meta span {
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .article-meta i {
+            margin-right: 5px;
+        }
+        
+        .article-content h2 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+        
+        .article-content p {
+            margin-bottom: 20px;
+            color: var(--gray);
+        }
+        
+        .read-more {
+            display: inline-block;
+            color: var(--primary);
+            font-weight: 600;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .read-more:hover {
+            color: #3a5bef;
+        }
+        
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .tag {
+            background-color: var(--secondary);
+            color: var(--gray);
+            padding: 5px 10px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .tag:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            flex: 1;
+        }
+        
+        .sidebar-widget {
+            background-color: white;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .sidebar-widget h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .popular-posts {
+            list-style: none;
+        }
+        
+        .popular-post {
+            display: flex;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .popular-post:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        
+        .popular-post img {
+            width: 80px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-right: 15px;
+        }
+        
+        .popular-post h4 {
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+        
+        .popular-post span {
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+        
+        .categories {
+            list-style: none;
+        }
+        
+        .category {
+            margin-bottom: 10px;
+        }
+        
+        .category a {
+            display: flex;
+            justify-content: space-between;
+            color: var(--dark);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .category a:hover {
+            color: var(--primary);
+        }
+        
+        .category-count {
+            background-color: var(--secondary);
+            color: var(--gray);
+            padding: 2px 8px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+        }
+        
+        .newsletter-form input {
+            width: 100%;
+            padding: 12px 15px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .newsletter-form button {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .newsletter-form button:hover {
+            background-color: #3a5bef;
+        }
+        
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 50px;
+        }
+        
+        .pagination a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            margin: 0 5px;
+            color: var(--dark);
+            text-decoration: none;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+        
+        .pagination a.active,
+        .pagination a:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 50px 0 20px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h3 {
+            color: white;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #444;
+        }
+        
+        .footer-column p {
+            color: #aaa;
+            margin-bottom: 20px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .social-links a {
+            color: white;
+            font-size: 1.2rem;
+            transition: color 0.3s;
+        }
+        
+        .social-links a:hover {
+            color: var(--primary);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #aaa;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #444;
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        
+        /* Dark mode toggle */
+        .dark-mode-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--primary);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            z-index: 100;
+            border: none;
+            font-size: 1.2rem;
+        }
+        
+        /* Back to top button */
+        .back-to-top {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            background-color: var(--dark);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            z-index: 100;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+            border: none;
+            font-size: 1.2rem;
+        }
+        
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        /* Comment Section */
+        .comments-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 50px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .comments-section h3 {
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .comment {
+            display: flex;
+            margin-bottom: 25px;
+            padding-bottom: 25px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .comment:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        
+        .comment-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 15px;
+        }
+        
+        .comment-content h4 {
+            font-size: 1rem;
+            margin-bottom: 5px;
+        }
+        
+        .comment-meta {
+            font-size: 0.8rem;
+            color: var(--gray);
+            margin-bottom: 10px;
+        }
+        
+        .comment-text {
+            margin-bottom: 10px;
+        }
+        
+        .reply-btn {
+            color: var(--primary);
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0;
+        }
+        
+        .comment-form {
+            margin-top: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .form-group textarea {
+            min-height: 150px;
+        }
+        
+        .submit-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+        
+        .submit-btn:hover {
+            background-color: #3a5bef;
+        }
+        
+        /* Like button */
+        .like-btn {
+            background: none;
+            border: none;
+            color: var(--gray);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+        
+        .like-btn.liked {
+            color: var(--primary);
+        }
+        
+        .like-btn i {
+            margin-right: 5px;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .main-content {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                margin-top: 40px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                margin-top: 20px;
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .nav-links li {
+                margin: 10px 0;
+            }
+            
+            .menu-toggle {
+                display: block;
+                position: absolute;
+                top: 20px;
+                right: 20px;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+        }
+        
+        /* Dark mode styles */
+        body.dark-mode {
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+        
+        body.dark-mode header,
+        body.dark-mode .article-card,
+        body.dark-mode .sidebar-widget,
+        body.dark-mode .comments-section {
+            background-color: #1e1e1e;
+            color: #e0e0e0;
+        }
+        
+        body.dark-mode .article-content p,
+        body.dark-mode .popular-post span,
+        body.dark-mode .category a,
+        body.dark-mode .footer-links a,
+        body.dark-mode .footer-column p,
+        body.dark-mode .comment-meta,
+        body.dark-mode .comment-text {
+            color: #b0b0b0;
+        }
+        
+        body.dark-mode .sidebar-widget h3,
+        body.dark-mode .comments-section h3 {
+            border-bottom-color: #444;
+        }
+        
+        body.dark-mode .search-bar input,
+        body.dark-mode .newsletter-form input,
+        body.dark-mode .form-group input,
+        body.dark-mode .form-group textarea {
+            background-color: #2d2d2d;
+            border-color: #444;
+            color: #e0e0e0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <a href="#" class="logo">Tech Insights</a>
+                <div class="menu-toggle">☰</div>
+                <ul class="nav-links">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Technology</a></li>
+                    <li><a href="#">Programming</a></li>
+                    <li><a href="#">AI</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Latest Tech News & Insights</h1>
+            <p>Stay updated with the newest trends in technology, programming, and artificial intelligence.</p>
+            <div class="search-bar">
+                <input type="text" placeholder="Search articles...">
+                <button>Search</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="main-content">
+            <!-- Articles Section -->
+            <section class="articles">
+                <!-- Article 1 -->
+                <article class="article-card">
+                    <img src="https://source.unsplash.com/random/800x400/?ai" alt="AI Technology" class="article-image">
+                    <div class="article-content">
+                        <div class="article-meta">
+                            <span><i>📅</i> June 15, 2023</span>
+                            <span><i>👤</i> Sarah Johnson</span>
+                            <span><i>⏱️</i> 5 min read</span>
+                        </div>
+                        <h2>The Future of AI in Everyday Applications</h2>
+                        <p>Artificial Intelligence is no longer just a futuristic concept. It's here, and it's transforming how we interact with technology every day. From smart assistants to predictive text, AI is becoming an invisible but essential part of our digital lives...</p>
+                        <a href="#" class="read-more">Read More →</a>
+                        <div class="tags">
+                            <span class="tag">AI</span>
+                            <span class="tag">Machine Learning</span>
+                            <span class="tag">Technology</span>
+                        </div>
+                        <button class="like-btn"><i>❤️</i> <span class="like-count">24</span> Likes</button>
+                    </div>
+                </article>
+
+                <!-- Article 2 -->
+                <article class="article-card">
+                    <img src="https://source.unsplash.com/random/800x400/?programming" alt="Programming" class="article-image">
+                    <div class="article-content">
+                        <div class="article-meta">
+                            <span><i>📅</i> June 10, 2023</span>
+                            <span><i>👤</i> Michael Chen</span>
+                            <span><i>⏱️</i> 8 min read</span>
+                        </div>
+                        <h2>JavaScript Frameworks Comparison 2023</h2>
+                        <p>With so many JavaScript frameworks available, choosing the right one for your project can be overwhelming. We compare React, Vue, Angular, and Svelte to help you make an informed decision based on performance, learning curve, and community support...</p>
+                        <a href="#" class="read-more">Read More →</a>
+                        <div class="tags">
+                            <span class="tag">JavaScript</span>
+                            <span class="tag">Web Development</span>
+                            <span class="tag">Frameworks</span>
+                        </div>
+                        <button class="like-btn"><i>❤️</i> <span class="like-count">18</span> Likes</button>
+                    </div>
+                </article>
+
+                <!-- Article 3 -->
+                <article class="article-card">
+                    <img src="https://source.unsplash.com/random/800x400/?cybersecurity" alt="Cybersecurity" class="article-image">
+                    <div class="article-content">
+                        <div class="article-meta">
+                            <span><i>📅</i> June 5, 2023</span>
+                            <span><i>👤</i> David Wilson</span>
+                            <span><i>⏱️</i> 6 min read</span>
+                        </div>
+                        <h2>Essential Cybersecurity Practices for Developers</h2>
+                        <p>In an era of increasing cyber threats, developers must prioritize security in their applications. Learn about the most common vulnerabilities and how to protect your code from potential attacks with these essential practices...</p>
+                        <a href="#" class="read-more">Read More →</a>
+                        <div class="tags">
+                            <span class="tag">Security</span>
+                            <span class="tag">Development</span>
+                            <span class="tag">Best Practices</span>
+                        </div>
+                        <button class="like-btn"><i>❤️</i> <span class="like-count">32</span> Likes</button>
+                    </div>
+                </article>
+
+                <!-- Comments Section (visible when viewing a single article) -->
+                <div class="comments-section" id="comments" style="display: none;">
+                    <h3>Comments (3)</h3>
+                    
+                    <!-- Comment 1 -->
+                    <div class="comment">
+                        <img src="https://randomuser.me/api/portraits/women/43.jpg" alt="User" class="comment-avatar">
+                        <div class="comment-content">
+                            <h4>Emily Rodriguez</h4>
+                            <div class="comment-meta">Posted on June 16, 2023</div>
+                            <p class="comment-text">Great article! I've been using React for years but recently started exploring Svelte. The performance difference is noticeable.</p>
+                            <button class="reply-btn">Reply</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Comment 2 -->
+                    <div class="comment">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="User" class="comment-avatar">
+                        <div class="comment-content">
+                            <h4>Robert Smith</h4>
+                            <div class="comment-meta">Posted on June 15, 2023</div>
+                            <p class="comment-text">I think you missed some important points about Angular's dependency injection system which is a game changer for large applications.</p>
+                            <button class="reply-btn">Reply</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Comment 3 -->
+                    <div class="comment">
+                        <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="User" class="comment-avatar">
+                        <div class="comment-content">
+                            <h4>Jennifer Lee</h4>
+                            <div class="comment-meta">Posted on June 14, 2023</div>
+                            <p class="comment-text">Vue has been my go-to framework for small to medium projects. The learning curve is so gentle compared to others.</p>
+                            <button class="reply-btn">Reply</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Comment Form -->
+                    <form class="comment-form">
+                        <h3>Leave a Comment</h3>
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="comment">Comment</label>
+                            <textarea id="comment" required></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">Post Comment</button>
+                    </form>
+                </div>
+
+                <!-- Pagination -->
+                <div class="pagination">
+                    <a href="#">&laquo;</a>
+                    <a href="#" class="active">1</a>
+                    <a href="#">2</a>
+                    <a href="#">3</a>
+                    <a href="#">4</a>
+                    <a href="#">5</a>
+                    <a href="#">&raquo;</a>
+                </div>
+            </section>
+
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <!-- About Widget -->
+                <div class="sidebar-widget">
+                    <h3>About The Blog</h3>
+                    <p>Tech Insights provides the latest news, tutorials, and analysis on technology, programming, and artificial intelligence. Our mission is to make complex tech topics accessible to everyone.</p>
+                </div>
+                
+                <!-- Popular Posts -->
+                <div class="sidebar-widget">
+                    <h3>Popular Posts</h3>
+                    <ul class="popular-posts">
+                        <li class="popular-post">
+                            <img src="https://source.unsplash.com/random/100x100/?blockchain" alt="Popular Post">
+                            <div>
+                                <h4>Understanding Blockchain Technology</h4>
+                                <span>May 28, 2023</span>
+                            </div>
+                        </li>
+                        <li class="popular-post">
+                            <img src="https://source.unsplash.com/random/100x100/?python" alt="Popular Post">
+                            <div>
+                                <h4>Python 3.11 Performance Improvements</h4>
+                                <span>May 20, 2023</span>
+                            </div>
+                        </li>
+                        <li class="popular-post">
+                            <img src="https://source.unsplash.com/random/100x100/?cloud" alt="Popular Post">
+                            <div>
+                                <h4>Cloud Computing Trends in 2023</h4>
+                                <span>May 15, 2023</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Categories -->
+                <div class="sidebar-widget">
+                    <h3>Categories</h3>
+                    <ul class="categories">
+                        <li class="category">
+                            <a href="#">Artificial Intelligence <span class="category-count">12</span></a>
+                        </li>
+                        <li class="category">
+                            <a href="#">Web Development <span class="category-count">24</span></a>
+                        </li>
+                        <li class="category">
+                            <a href="#">Mobile Apps <span class="category-count">8</span></a>
+                        </li>
+                        <li class="category">
+                            <a href="#">Cloud Computing <span class="category-count">15</span></a>
+                        </li>
+                        <li class="category">
+                            <a href="#">Cybersecurity <span class="category-count">11</span></a>
+                        </li>
+                        <li class="category">
+                            <a href="#">Data Science <span class="category-count">9</span></a>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Newsletter -->
+                <div class="sidebar-widget">
+                    <h3>Newsletter</h3>
+                    <p>Subscribe to our newsletter to get the latest posts delivered to your inbox.</p>
+                    <form class="newsletter-form">
+                        <input type="text" placeholder="Your Name">
+                        <input type="email" placeholder="Your Email">
+                        <button type="submit">Subscribe</button>
+                    </form>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Tech Insights</h3>
+                    <p>Bringing you the latest in technology news, tutorials, and insights to help you stay ahead in the digital world.</p>
+                    <div class="social-links">
+                        <a href="#"><i>📱</i></a>
+                        <a href="#"><i>🐦</i></a>
+                        <a href="#"><i>💻</i></a>
+                        <a href="#"><i>📘</i></a>
+                        <a href="#"><i>📸</i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Categories</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Technology</a></li>
+                        <li><a href="#">Programming</a></li>
+                        <li><a href="#">Artificial Intelligence</a></li>
+                        <li><a href="#">Web Development</a></li>
+                        <li><a href="#">Mobile Apps</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact</h3>
+                    <p>Email: info@techinsights.com</p>
+                    <p>Phone: (123) 456-7890</p>
+                    <p>Address: 123 Tech Street, Silicon Valley, CA</p>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Tech Insights. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top">↑</button>
+
+    <!-- Dark Mode Toggle -->
+    <button class="dark-mode-toggle">🌓</button>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile menu toggle
+            const menuToggle = document.querySelector('.menu-toggle');
+            const navLinks = document.querySelector('.nav-links');
+            
+            menuToggle.addEventListener('click', function() {
+                navLinks.classList.toggle('active');
+            });
+            
+            // Like button functionality
+            const likeButtons = document.querySelectorAll('.like-btn');
+            
+            likeButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const likeCount = this.querySelector('.like-count');
+                    let count = parseInt(likeCount.textContent);
+                    
+                    if (this.classList.contains('liked')) {
+                        count--;
+                        this.classList.remove('liked');
+                    } else {
+                        count++;
+                        this.classList.add('liked');
+                    }
+                    
+                    likeCount.textContent = count;
+                });
+            });
+            
+            // Back to top button
+            const backToTopButton = document.querySelector('.back-to-top');
+            
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    backToTopButton.classList.add('visible');
+                } else {
+                    backToTopButton.classList.remove('visible');
+                }
+            });
+            
+            backToTopButton.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+            
+            // Dark mode toggle
+            const darkModeToggle = document.querySelector('.dark-mode-toggle');
+            
+            darkModeToggle.addEventListener('click', function() {
+                document.body.classList.toggle('dark-mode');
+                
+                // Save preference to localStorage
+                if (document.body.classList.contains('dark-mode')) {
+                    localStorage.setItem('darkMode', 'enabled');
+                } else {
+                    localStorage.setItem('darkMode', 'disabled');
+                }
+            });
+            
+            // Check for saved dark mode preference
+            if (localStorage.getItem('darkMode') === 'enabled') {
+                document.body.classList.add('dark-mode');
+            }
+            
+            // Simulate article click to show comments
+            const readMoreLinks = document.querySelectorAll('.read-more');
+            const commentsSection = document.getElementById('comments');
+            
+            readMoreLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    commentsSection.style.display = 'block';
+                    window.scrollTo({
+                        top: commentsSection.offsetTop - 20,
+                        behavior: 'smooth'
+                    });
+                });
+            });
+            
+            // Comment form submission
+            const commentForm = document.querySelector('.comment-form');
+            
+            if (commentForm) {
+                commentForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const name = document.getElementById('name').value;
+                    const commentText = document.getElementById('comment').value;
+                    
+                    if (name && commentText) {
+                        // In a real app, you would send this to a server
+                        alert('Comment submitted successfully!');
+                        commentForm.reset();
+                    }
+                });
+            }
+            
+            // Newsletter form submission
+            const newsletterForm = document.querySelector('.newsletter-form');
+            
+            if (newsletterForm) {
+                newsletterForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    alert('Thanks for subscribing to our newsletter!');
+                    newsletterForm.reset();
+                });
+            }
+            
+            // Search functionality
+            const searchBar = document.querySelector('.search-bar input');
+            const searchButton = document.querySelector('.search-bar button');
+            
+            searchButton.addEventListener('click', function() {
+                if (searchBar.value.trim() !== '') {
+                    alert(`Searching for: ${searchBar.value}`);
+                    // In a real app, you would redirect to search results or filter articles
+                }
+            });
+            
+            // Allow search on Enter key
+            searchBar.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter' && searchBar.value.trim() !== '') {
+                    alert(`Searching for: ${searchBar.value}`);
+                }
+            });
+            
+            // Tag click functionality
+            const tags = document.querySelectorAll('.tag');
+            
+            tags.forEach(tag => {
+                tag.addEventListener('click', function() {
+                    alert(`Showing articles tagged with: ${this.textContent}`);
+                    // In a real app, you would filter articles by this tag
+                });
+            });
+        });
+    </script>
+</body>
+</html>

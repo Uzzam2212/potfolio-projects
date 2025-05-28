@@ -1,0 +1,1408 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>ADVENTURE</title>
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+        />
+        <link rel="stylesheet" href="css/style.css" />
+        <link rel="stylesheet" href="css/responsive.css" />
+        <link
+            rel="apple-touch-icon"
+            sizes="180x180"
+            href="img/apple-touch-icon.png"
+        />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="32x32"
+            href="img/favicon-32x32.png"
+        />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="16x16"
+            href="img/favicon-16x16.png"
+        />
+        <link rel="manifest" href="/site.webmanifest" />
+        <style>
+            /* Google fonts */
+            @import url("https://fonts.googleapis.com/css2?family=Lora:wght@400;700&family=Montserrat:wght@400;800&family=Parisienne&family=Roboto&family=Teko:wght@300&display=swap");
+            @import url("https://fonts.googleapis.com/css2?family=Rubik+Dirt&display=swap");
+
+            /* Root element (aka html) */
+            :root {
+                box-sizing: border-box;
+                scroll-behavior: smooth;
+                --ff-parisienne: "Parisienne", cursive;
+                --ff-montserrat: "Montserrat", sans-serif;
+                --ff-lora: "Lora", serif;
+                --ff-roboto: "Roboto", sans-serif;
+                --ff-rubik-dirt: "Rubik Dirt", cursive;
+                --fs-paragraphs: calc(0.8rem + 0.35vw);
+                --fs-links-btns: calc(0.65rem + 0.5vw);
+            }
+
+            /* Global */
+            *,
+            *::before,
+            *::after {
+                margin: 0;
+                padding: 0;
+                box-sizing: inherit;
+            }
+
+            img {
+                max-width: 100%;
+                display: block;
+            }
+
+            a {
+                text-decoration: none;
+            }
+
+            ul {
+                list-style: none;
+            }
+
+            span {
+                color: #7c7c7c;
+                padding: 0px 40px;
+            }
+
+            body,
+            html {
+                overflow-x: hidden;
+                box-sizing: border-box;
+            }
+
+            .container {
+                width: 98%;
+                max-width: 91rem;
+                margin: 0 auto;
+            }
+
+            /*scrollbar*/
+            ::-webkit-scrollbar {
+                width: 10px;
+            }
+
+            ::-webkit-scrollbar-thumb {
+                background: gray;
+                border-radius: 10px;
+            }
+
+            /* Navbar */
+            .navbar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                background: rgba(0, 0, 0, 0.2);
+                backdrop-filter: saturate(180%) blur(10px);
+                display: flex;
+                width: 100%;
+                justify-content: space-between;
+                align-items: center;
+                padding: 12px 5px;
+                z-index: 10;
+                color: whitesmoke;
+            }
+
+            .logo {
+                font-family: var(--ff-rubik-dirt);
+                font-size: 1.5rem;
+                text-transform: uppercase;
+                letter-spacing: 0.4rem;
+                padding: 0 1.2rem;
+                font-weight: 300;
+                color: rgb(254, 252, 252);
+            }
+
+            .nav-links {
+                display: flex;
+                align-items: center;
+            }
+
+            .nav-links li {
+                font-family: var(--ff-montserrat);
+                margin: 0px 15px;
+            }
+
+            .nav-links li a {
+                color: white;
+                cursor: pointer;
+            }
+
+            .cir_border {
+                padding: 6px 20px;
+                font-weight: bold;
+                border: 2px hidden whitesmoke;
+                border-radius: 20px;
+                margin: 0px -10px;
+            }
+
+            header {
+                width: 100vw;
+                height: 100vh;
+                background-image: url("./img/bg.png");
+                background-position: bottom;
+                background-attachment: fixed;
+                background-size: cover;
+                display: flex;
+                align-items: end;
+                justify-content: center;
+            }
+
+            .header-content {
+                font-family: var(--ff-lora);
+                letter-spacing: 0.5rem;
+                color: whitesmoke;
+                text-align: center;
+                z-index: 1;
+                padding: 4rem;
+                margin-bottom: 150px;
+            }
+
+            .header-content a {
+                letter-spacing: 0.1rem;
+            }
+
+            .header-content h2 {
+                font-size: 4vmin;
+            }
+
+            .line {
+                width: 150px;
+                height: 4px;
+                background: #fc036b;
+                margin: 10px auto;
+                border-radius: 5px;
+            }
+
+            .header-content h1 {
+                font-size: 7vmin;
+                margin-top: 50px;
+                margin-bottom: 30px;
+            }
+
+            .ctn {
+                font-family: var(--ff-montserrat);
+                font-size: var(--fs-links-btns);
+                font-weight: 700;
+                padding: 13px 50px;
+                background: #fc036b;
+                border-radius: 30px;
+                color: whitesmoke;
+            }
+
+            .menu-btn {
+                position: absolute;
+                top: 30px;
+                right: 30px;
+                width: 40px;
+                cursor: pointer;
+                display: none;
+            }
+
+            /* Events */
+            section {
+                width: 80%;
+                margin: 80px auto;
+            }
+
+            .title {
+                text-align: center;
+                font-family: var(--ff-montserrat);
+                font-size: 4vmin;
+            }
+
+            .row {
+                display: flex;
+                width: 100%;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .card {
+                cursor: pointer;
+                height: 400px;
+            }
+
+            .row .col {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                margin: 10px;
+                height: 450px;
+            }
+
+            .row .col img {
+                width: 90%;
+            }
+
+            .events .row {
+                margin-top: 50px;
+            }
+
+            .col > h4 {
+                font-size: calc(1rem + 0.5vw);
+                margin: 20px auto;
+                font-family: var(--ff-lora);
+            }
+
+            .col p {
+                color: #7c7c7c;
+                padding: 0px 40px;
+                font-size: var(--fs-paragraphs);
+                font-family: var(--ff-roboto);
+            }
+
+            .col > p {
+                color: #7c7c7c;
+                padding: 0;
+                line-height: 1.5;
+                text-align: center;
+                max-width: 35ch;
+            }
+
+            .events .ctn {
+                margin-top: 30px;
+            }
+
+            /* explore */
+            .explore {
+                width: 100%;
+                height: 100vh;
+                background-image: url(./img/bg2.png);
+                background-attachment: fixed;
+                background-position: center;
+                background-size: cover;
+                background-repeat: no-repeat;
+                display: flex;
+                align-items: center;
+            }
+
+            .explore-content {
+                font-family: var(--ff-lora);
+                color: whitesmoke;
+                display: flex;
+                align-items: center;
+                flex-direction: column;
+                margin-left: 8rem;
+                position: relative;
+                z-index: 1;
+                padding: 2rem 17px;
+                margin: auto;
+            }
+
+            .explore-content::after {
+                content: "";
+                position: absolute;
+                inset: 0;
+                z-index: -1;
+                display: block;
+                background: rgba(0, 0, 0, 0.2);
+                backdrop-filter: blur(2.5px);
+                border-radius: 0.5rem;
+            }
+
+            .explore-content h1 {
+                font-size: calc(2.2rem + 1vw);
+                letter-spacing: 0.3rem;
+                margin: auto;
+            }
+
+            .explore-content .line {
+                margin-bottom: 50px;
+            }
+
+            .explore-content p {
+                color: rgb(221, 221, 221);
+                max-width: 65ch;
+                line-height: 1.5;
+                text-align: left;
+                padding: 0px 35px;
+            }
+
+            .explore-content .ctn {
+                margin: 17px auto;
+                padding: 12px 27px;
+            }
+
+            /* tours */
+            .image-gallery {
+                display: grid;
+                gap: 1.8rem 1rem;
+                grid-template-columns: repeat(2, 1fr);
+                justify-content: center;
+                padding: 1rem;
+            }
+
+            .tours .row {
+                gap: 4rem;
+            }
+
+            .content-col {
+                position: relative;
+            }
+
+            .content-col h1 {
+                font-size: calc(2.2rem + 1vw);
+                font-family: var(--ff-lora);
+                max-width: 15.5ch;
+            }
+
+            .content-col .line {
+                margin-left: 0;
+            }
+
+            .content-col p {
+                padding: 0;
+                margin: 30px 0;
+                width: 100%;
+                text-align: left;
+                max-width: 40ch;
+            }
+
+            .content-col .ctn {
+                position: absolute;
+                left: 0;
+                bottom: -14%;
+            }
+
+            /* about */
+            #about {
+                width: 100%;
+            }
+
+            #about_us {
+                background: url("https://awe365.com/wp-content/uploads/2013/07/adventure-sports-hang-gliding-flickrcc-image-by-Steve-Slater.jpg");
+                width: 100%;
+                height: 630px;
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-attachment: fixed;
+                margin: 30px 0px 0px 0px;
+            }
+
+            #about_us div {
+                padding: 10px;
+                display: grid;
+                align-items: center;
+                grid-template-columns: 2fr 1fr 1fr;
+                column-gap: 5px;
+                position: relative;
+            }
+
+            #about_us div span {
+                margin: 0;
+                position: absolute;
+                top: 60%;
+                opacity: 0;
+                left: 80%;
+                -ms-transform: translate(-50%, -50%);
+                transform: translate(-50%, -50%);
+                transition: 1s;
+            }
+
+            #about_us p {
+                width: 43em;
+                color: white;
+                text-align: justify;
+                padding-top: 14em;
+                font-family: "Work Sans", sans-serif;
+                margin-left: 6em;
+            }
+
+            #about_us p::first-letter {
+                padding-left: 47px;
+                font-size: 55px;
+                color: #fc036b;
+            }
+
+            /* contact */
+            #contact {
+                width: 90%;
+            }
+
+            .contact_us {
+                margin-top: 3rem;
+                display: flex;
+                font-family: var(--ff-roboto);
+            }
+
+            form {
+                width: 50%;
+            }
+
+            .cbox {
+                width: 45%;
+                margin-left: 70px;
+                padding: 10px 30px;
+            }
+
+            .cbox-message {
+                font-size: 1.2em;
+                margin: 0;
+            }
+
+            .cbox-line {
+                width: 20%;
+                height: 0.2em;
+                background-color: #fb036b;
+                margin-bottom: 3em;
+                margin-top: 1em;
+            }
+
+            .c_boxx a p {
+                color: white;
+                font-size: 1em;
+                font-weight: 100;
+                padding: 1rem;
+                padding: 0px 40px;
+            }
+
+            .c_boxx a {
+                padding: 1em;
+                margin-bottom: 2em;
+                padding-left: 2em;
+                border: 0.1em solid #fc036b;
+                background-color: #fc036b;
+                color: white;
+                display: flex;
+                border-radius: 2em;
+                align-items: center;
+                border: #fc036b 0.1em solid;
+                font-size: 1em;
+            }
+
+            .c_boxx a:hover {
+                background-color: white;
+                color: #fc036b;
+                transition: all 0.5s ease;
+            }
+
+            .c_boxx i {
+                font-size: 38px;
+                margin-right: 10px;
+            }
+
+            input[type="text"],
+            select,
+            textarea {
+                width: 100%;
+                padding: 12px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                resize: vertical;
+            }
+
+            label {
+                padding: 0px 0px 7px 6px;
+                display: inline-block;
+            }
+
+            input[type="submit"] {
+                background-color: #fc036b;
+                color: whitesmoke;
+                padding: 12px 50px;
+                border: 2px solid #fc036b;
+                border-radius: 100vmax;
+                cursor: pointer;
+                font-family: var(--ff-montserrat);
+                font-size: var(--fs-links-btns);
+            }
+
+            input[type="submit"]:hover {
+                background-color: whitesmoke;
+                color: #fc036b;
+            }
+
+            .cform {
+                background-color: #222;
+                padding: 1em;
+                border-radius: 0.5rem;
+            }
+
+            .ccol {
+                float: left;
+                width: 25%;
+                margin-top: 6px;
+            }
+
+            .crow-in {
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+            }
+
+            .crow-message {
+                margin: 1rem;
+            }
+
+            .crow-message div {
+                width: 20%;
+                display: block;
+                height: 1em;
+                border-bottom: 3px solid #fc036b;
+            }
+
+            .ccol-left {
+                margin: 1em;
+            }
+
+            .ccol {
+                float: left;
+                width: 100%;
+                margin-top: 6px;
+            }
+
+            #name {
+                width: 90%;
+                margin: 1em;
+            }
+
+            #email {
+                width: 90%;
+                margin: 1em;
+            }
+
+            .crow:after,
+            .crow-s::after {
+                content: "";
+                display: table;
+                clear: both;
+            }
+
+            .crow-s {
+                margin: 1em;
+                color: #fc036b;
+            }
+
+            /* footer */
+            .footer {
+                width: 100%;
+                min-height: 100px;
+                padding: 20px 80px;
+                margin: 0;
+                background: #222;
+                text-align: center;
+            }
+
+            .footer p {
+                color: whitesmoke;
+                margin: 20px auto;
+                padding: 20px auto;
+            }
+
+            .footer span {
+                display: block;
+                color: whitesmoke;
+                padding: 20px auto;
+            }
+
+            .social {
+                width: 360px;
+                margin: 30px auto;
+            }
+
+            .social li {
+                list-style: none;
+            }
+
+            .social a {
+                margin-right: 10px;
+                font-size: 18px;
+                background-color: transparent;
+                border-radius: 50%;
+                padding: 5px 8px;
+                border: 1px solid rgba(255, 255, 255, 0.1);
+            }
+
+            .social a:hover {
+                background-color: #fc036b;
+            }
+
+            .social i {
+                display: inline;
+                text-align: center;
+                color: whitesmoke;
+            }
+
+            /* animations */
+            img {
+                transition: transform 0.3s ease;
+            }
+
+            img:hover {
+                transform: scale(1.1);
+            }
+
+            .cir_border:hover {
+                color: #fc036b;
+            }
+
+            .active {
+                border: 2px solid whitesmoke;
+                border-radius: 20px;
+                color: #fc036b;
+                cursor: pointer;
+            }
+
+            .ctn:hover {
+                background: whitesmoke;
+                color: #fc036b;
+                box-shadow: 2px 2px 5px #00000056;
+                cursor: pointer;
+            }
+
+            .nav-links .ctn:hover a {
+                color: #fc036b;
+            }
+
+            body {
+                background-color: black;
+                color: white;
+            }
+
+            body.dark {
+                background-color: white;
+                color: black;
+            }
+
+            .checkbox {
+                opacity: 0;
+                position: absolute;
+            }
+
+            .label {
+                width: 48px;
+                height: 22px;
+                background-color: #111;
+                display: flex;
+                border-radius: 50px;
+                align-items: center;
+                justify-content: space-between;
+                padding: 5px;
+                position: relative;
+                transform: scale(1.5);
+            }
+
+            .ball {
+                width: 20px;
+                height: 18px;
+                background-color: white;
+                position: absolute;
+                top: 2px;
+                left: 2px;
+                border-radius: 50%;
+                transition: transform 0.2s linear;
+            }
+
+            .checkbox:checked + .label .ball {
+                transform: translateX(24px);
+            }
+
+            .fa-moon-o {
+                color: white;
+            }
+
+            .fa-sun-o {
+                color: yellow;
+            }
+
+            .color {
+                color: white;
+            }
+
+            /* scroll button */
+            .arrow {
+                position: fixed;
+                z-index: 99;
+                cursor: pointer;
+                padding: 15px;
+                width: 8vmin;
+                height: 8vmin;
+                box-sizing: border-box;
+                left: 95%;
+                top: 86%;
+                transform: rotate(-45deg);
+            }
+
+            .arrow::before {
+                content: '';
+                width: 100%;
+                height: 100%;
+                border-width: .8vmin .8vmin 0 0;
+                border-style: solid;
+                border-color: #fff;
+                transition: .2s ease;
+                display: block;
+                transform-origin: 100% 0;
+            }
+
+            .arrow:after {
+                content: '';
+                float: left;
+                position: relative;
+                top: -86%;
+                width: 100%;
+                height: 100%;
+                border-width: 0 .8vmin 0 0;
+                border-style: solid;
+                border-color: #fff;
+                transform-origin: 100% 0;
+                transition: .2s ease;
+            }
+
+            .arrow:hover::after {
+                transform: rotate(45deg);
+                border-color: #fc036b;
+                height: 120%;
+            }
+
+            .arrow:hover::before {
+                border-color: #fc036b;
+                transform: scale(.8);
+            }
+
+            /* Dark Mode Styles Scroll Button */
+            .dark .arrow::before {
+                border-color: black;
+            }
+
+            .dark .arrow:after {
+                border-color: black;
+            }
+
+            .dark .arrow:hover::after {
+                border-color: #fc036b;
+            }
+
+            .dark .arrow:hover::before {
+                border-color: #fc036b;
+            }
+
+            #quote {
+                position: relative;
+                font-family: sans-serif;
+                text-transform: uppercase;
+                font-size: 2em;
+                letter-spacing: 4px;
+                overflow: hidden;
+                background: linear-gradient(45deg, #fc036b, #fff, #41031d);
+                background-repeat: no-repeat;
+                background-size: 80%;
+                animation: animate 8s linear infinite;
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: rgba(255, 255, 255, 0);
+            }
+
+            @keyframes animate {
+                0% {
+                    background-position: -500%;
+                }
+                100% {
+                    background-position: 500%;
+                }
+            }
+
+            /* carousel */
+            input[type=radio] {
+                display: none;
+            }
+
+            .cardt {
+                position: absolute;
+                width: 60%;
+                height: 100%;
+                left: 5vw;
+                right: 0;
+                top: 14%;
+                margin: auto;
+                transition: transform .4s ease;
+                cursor: pointer;
+            }
+
+            .containerx {
+                width: 100%;
+                height: 50vh;
+                transform-style: preserve-3d;
+            }
+
+            .cards {
+                position: relative;
+                width: 100vh;
+                height: 100%;
+            }
+
+            .cards label img {
+                width: 100%;
+                height: 100%;
+                border-radius: 10px;
+                object-fit: cover;
+            }
+
+            #item-1:checked ~ .cards #col-img-3,
+            #item-2:checked ~ .cards #col-img-1,
+            #item-3:checked ~ .cards #col-img-2 {
+                transform: translatex(-40%) scale(.8);
+                opacity: .4;
+                z-index: 0;
+            }
+
+            #item-1:checked ~ .cards #col-img-2,
+            #item-2:checked ~ .cards #col-img-3,
+            #item-3:checked ~ .cards #col-img-1 {
+                transform: translatex(40%) scale(.8);
+                opacity: .4;
+                z-index: 0;
+            }
+
+            #item-1:checked ~ .cards #col-img-1,
+            #item-2:checked ~ .cards #col-img-2,
+            #item-3:checked ~ .cards #col-img-3 {
+                transform: translatex(0) scale(1);
+                opacity: 1;
+                z-index: 1;
+            }
+
+            #item-1:checked ~ .cards #col-img-1 img,
+            #item-2:checked ~ .cards #col-img-2 img,
+            #item-3:checked ~ .cards #col-img-3 img {
+                box-shadow: 0px 0px 5px 0px rgba(81, 81, 81, 0.47);
+            }
+
+            /* Benefits Section Animations */
+            .benefit-icon {
+                text-align: center;
+                margin-bottom: 20px;
+                color: #fc036b;
+            }
+
+            .animate-card {
+                transition: transform 0.3s ease-in-out;
+                position: relative;
+                overflow: hidden;
+            }
+
+            .animate-card:hover {
+                transform: translateY(-10px);
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            }
+
+            .animate-card::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(
+                    120deg,
+                    transparent,
+                    rgba(255, 255, 255, 0.2),
+                    transparent
+                );
+                transition: 0.5s;
+            }
+
+            .animate-card:hover::before {
+                left: 100%;
+            }
+
+            .animate-card .benefit-icon i {
+                transition: transform 0.3s ease-in-out;
+            }
+
+            .animate-card:hover .benefit-icon i {
+                transform: scale(1.2);
+            }
+
+            @keyframes fadeInUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            .animate-card {
+                animation: fadeInUp 0.6s ease-out forwards;
+            }
+
+            .animate-card:nth-child(2) {
+                animation-delay: 0.2s;
+            }
+
+            .animate-card:nth-child(3) {
+                animation-delay: 0.4s;
+            }
+        </style>
+    </head>
+    <body
+        onload='if (window.location.href.substr(window.location.href.length - 6) == "#about") { introAboutLogoTransition(); }'
+    >
+        <!--navbar-->
+        <nav class="navbar glass" style="height: 70px">
+            <span
+                ><a href="#home" style="display: flex; align-items: center"
+                    ><img
+                        class="img2"
+                        src="./img/mountain.png"
+                        width="40"
+                        style="margin: -25px -10px -25px -20px"
+                    />
+                    <h1 class="logo">&nbsp;ADVENTURE</h1></a
+                ></span
+            >
+            <ul class="nav-links">
+                <li>
+                    <a href="#home" id="pri" class="active cir_border">Home</a>
+                </li>
+                <li><a href="#events" id="sec" class="cir_border">Events</a></li>
+                <li>
+                    <a href="#explore" id="tri" class="cir_border">Explore</a>
+                </li>
+                <li>
+                    <a href="#tours" id="quad" class="cir_border">Tours</a>
+                </li>
+                <li><a href="#about" id="quint" class="cir_border">About</a></li>
+                <li>
+                    <a href="#contribution" id="hex" class="cir_border"
+                        >Contributions</a
+                    >
+                </li>
+                <li>
+                    <a href="#contact" id="hept" class="cir_border">Contact</a>
+                </li>
+                <li>
+                    <div>
+                        <input
+                            type="checkbox"
+                            class="checkbox dark"
+                            id="checkbox"
+                        />
+                        <label for="checkbox" class="label">
+                            <i class="fa fa-moon-o"></i>
+                            <i class="fa fa-sun-o"></i>
+                            <div class="ball"></div>
+                        </label>
+                    </div>
+                </li>
+            </ul>
+            <img src="./img/menu-btn.png" alt="" class="menu-btn" />
+        </nav>
+        <!--navbar-->
+
+        <header id="home">
+            <div class="header-content">
+                <h2 id="quote">Explore the colourful World</h2>
+                <div class="line"></div>
+                <h1>A WONDERFUL GIFT</h1>
+                <a
+                    href="#about"
+                    class="ctn"
+                    onclick='removeall(); $("#quad").css("border", "2px solid whitesmoke"); $("#quad").css("border-radius", "20px");'
+                    >Learn more</a
+                >
+            </div>
+        </header>
+
+        <!--Events-->
+        <section class="events" id="events">
+            <div class="container">
+                <div class="title">
+                    <h1 class="dark">Upcoming Events</h1>
+                    <div class="line"></div>
+                </div>
+                <div class="row">
+                    <article class="card col">
+                        <img class="card-img" src="./img/img1.jfif" />
+                        <h4 class="dark">Everest camp trek</h4>
+                        <p class="font-color">
+                            Everest base camp trek is without a doubt, one of
+                            the most renowned travel destinations in the world.
+                        </p>
+                        <a href="#" class="ctn">All Details</a>
+                    </article>
+                    <article class="card col">
+                        <img src="./img/img2.jfif" />
+                        <h4 class="dark">Walking holidays</h4>
+                        <p class="font-color">
+                            Join small guided group walks, enjoy a challenging
+                            trek, or a luxury private guided walk which can be
+                            made especially for you.
+                        </p>
+                        <a href="#" class="ctn">All Details</a>
+                    </article>
+                    <article class="card col">
+                        <img src="./img/img2.jfif" />
+                        <h4 class="dark">Andaman Beaches</h4>
+                        <p class="font-color">
+                            Diving in Andaman Beaches is exceptional. The costal
+                            belt surroundings is one of the richest coral reef
+                            ecosystems in the world.
+                        </p>
+                        <a href="#" class="ctn">All Details</a>
+                    </article>
+                </div>
+            </div>
+        </section>
+        <!--Events-->
+
+        <!--Explore-->
+        <section class="explore" id="explore">
+            <div class="explore-content">
+                <h1>EXPLORE THE WORLD</h1>
+                <div class="line"></div>
+                <p>
+                    "Travel makes one modest. You see what a tiny place you
+                    occupy in the world."– Gustav Flaubert <br />Exploring will
+                    make you want to pack your bag, book that ticket and jet
+                    away.
+                </p>
+                <a href="#" class="ctn">Explore more</a>
+            </div>
+        </section>
+        <!--Explore-->
+
+        <!--tours-->
+        <section class="tours" id="tours">
+            <div class="container row">
+                <div class="col content-col">
+                    <h1 class="font-color">UPCOMING TOURS & DESTINATION</h1>
+                    <div class="line"></div>
+                    <p>
+                        Wed 28 sept 2023 : Port of Spain City Tour and Birdseye
+                        Fort View. <br />
+                        Sat 1 oct 2023 : Tour the Gasparee Caves.<br />
+                        Tues 4 oct 2023 : Trinidad North Coast Experience.
+                        <br />
+                        and many more ......
+                    </p>
+                    <a href="#" class="ctn">Learn more</a>
+                </div>
+                <div class="image-col">
+                    <div class="image-gallery">
+                        <img src="./img/img3.png" alt="" />
+                        <img src="./img/img4.png" alt="" />
+                        <img src="./img/img5.png" alt="" />
+                        <img src="./img/img6.png" alt="" />
+                    </div>
+                </div>
+            </div>
+            <br /><br /><br /><br />
+        </section>
+        <!--tours-->
+
+        <!-- About -->
+        <section id="about">
+            <div class="title">
+                <h1 class="font-color">About Us</h1>
+                <div class="line"></div>
+            </div>
+            <br />
+            <div id="about_us">
+                <div class="boxx">
+                    <div class="containerx">
+                        <input type="radio" name="slider" id="item-1" checked />
+                        <input type="radio" name="slider" id="item-2" />
+                        <input type="radio" name="slider" id="item-3" />
+                        <div class="cards">
+                            <label class="cardt" for="item-1" id="col-img-1">
+                                <img src="./img/carousel-img4.jpg" />
+                            </label>
+                            <label class="cardt" for="item-2" id="col-img-2">
+                                <img src="./img/carousel-img5.jpg" />
+                            </label>
+                            <label class="cardt" for="item-3" id="col-img-3">
+                                <img src="./img/carousel-img6.jpg" />
+                            </label>
+                        </div>
+                    </div>
+                    <span id="about-quad">
+                        <a href="#home">
+                            <center>
+                                <h1 style="font-family: var(--ff-montserrat); color: white;">
+                                    Find that
+                                </h1>
+                                <br />
+                                <img class="img2" src="./img/mountain_dark.jpg" width="200" style="border-radius: 12%" />
+                                <br />
+                                <h1 class="logo" style="font-size: 50px">ADVENTURE</h1>
+                            </center>
+                        </a>
+                    </span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Adventure Benefits -->
+        <section class="benefits">
+            <div class="title">
+                <h1 class="font-color">Benefits of Adventure</h1>
+                <div class="line"></div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <article class="card col animate-card">
+                        <div class="benefit-icon">
+                            <i class="fa fa-heartbeat fa-3x"></i>
+                        </div>
+                        <h4 class="dark">Physical Health</h4>
+                        <p class="font-color">
+                            Adventure activities improve cardiovascular health, build strength, and enhance overall fitness while having fun in nature.
+                        </p>
+                    </article>
+                    <article class="card col animate-card">
+                        <div class="benefit-icon">
+                            <i class="fa fa-brain fa-3x"></i>
+                        </div>
+                        <h4 class="dark">Mental Well-being</h4>
+                        <p class="font-color">
+                            Outdoor adventures reduce stress, boost mood, and provide a natural escape from daily life pressures.
+                        </p>
+                    </article>
+                    <article class="card col animate-card">
+                        <div class="benefit-icon">
+                            <i class="fa fa-rocket fa-3x"></i>
+                        </div>
+                        <h4 class="dark">Personal Growth</h4>
+                        <p class="font-color">
+                            Challenges in adventure sports build confidence, resilience, and problem-solving skills that benefit all aspects of life.
+                        </p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- contact -->
+        <section id="contact">
+            <div class="title">
+                <h1 class="font-color">Contact Us</h1>
+                <div class="line"></div>
+            </div>
+            <div class="contact_us">
+                <form class="cform" action="" method="post">
+                    <div class="crow-message">
+                        <h1 class="color">Send us a message</h1>
+                        <div></div>
+                    </div>
+                    <div class="crow-in">
+                        <input type="text" id="name" name="name" placeholder="Your name" />
+                        <input type="text" id="email" name="email" placeholder="Your Email id" />
+                    </div>
+                    <div class="crow">
+                        <div class="ccol-left">
+                            <select name="country" id="country">
+                                <option value="Pakistan">Pakistan</option>
+                                <option value="India">India</option>
+                                <option value="Russia">Russia</option>
+                                <option value="usa">USA</option>
+                                <option value="Japan">Japan</option>
+                                <option value="France">France</option>
+                                <option value="Brazil">Brazil</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="crow">
+                        <div class="ccol-left">
+                            <textarea type="text" id="remarks" name="remarks" placeholder="Your Remarks....." style="height: 150px"></textarea>
+                        </div>
+                    </div>
+                    <input class="crow-s" type="submit" value="Submit" />
+                </form>
+                <div class="cbox">
+                    <div>
+                        <p class="cbox-message">
+                            Prefer some other way ?<br />Reach us by using the details given below
+                        </p>
+                        <div class="cbox-line"></div>
+                    </div>
+                    <div class="c_boxx">
+                        <a href="mailto:abc@gmail.com">
+                            <i class="fa fa-envelope"></i>
+                            Mail: tourism@adventure.com
+                        </a>
+                    </div>
+                    <div class="c_boxx">
+                        <a href="tel:+92-12345-67890">
+                            <i class="fa fa-phone"></i>
+                            Phone: (+92) 12345-67890
+                        </a>
+                    </div>
+                    <div class="c_boxx">
+                        <a href="#">
+                            <i class="fa fa-map-marker"></i>
+                            Location: K2 Base Camp, Gilgit-Baltistan, Pakistan
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- contact  -->
+        <!-- up scroll -->
+        <i class="arrow"  onclick="topFunction()" id="upbtn"></i>
+        <!-- end -->
+        <!--footer-->
+        <section class="footer">
+            <span
+                >Created By Uzzam Developer | &#169; 2025 All rights
+                reserved.</span
+            >
+        </section>
+        <!--footer-->
+
+        <script>
+            const menuBtn = document.querySelector(".menu-btn");
+            const navlinks = document.querySelector(".nav-links");
+
+            menuBtn.addEventListener("click", () => {
+                navlinks.classList.toggle("mobile-menu");
+            });
+        </script>
+        <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+        <script>
+            if (window.screen.width <= 1130) {
+                function removeall() {
+                    $(".cir_border").css("border", "none");
+                }
+                $("#sec").on("click", function () {
+                    removeall();
+                    $("#sec").css("border", "2px solid whitesmoke");
+                    $("#sec").css("border-radius", "20px");
+                });
+                $("#pri").on("click", function () {
+                    removeall();
+                    $("#pri").css("border", "2px solid whitesmoke");
+                    $("#pri").css("border-radius", "20px");
+                });
+                $("#tri").on("click", function () {
+                    removeall();
+                    $("#tri").css("border", "2px solid whitesmoke");
+                    $("#tri").css("border-radius", "20px");
+                });
+                $("#quad").on("click", function () {
+                    removeall();
+                    $("#quad").css("border", "2px solid whitesmoke");
+                    $("#quad").css("border-radius", "20px");
+                });
+                $("#quint").on("click", function () {
+                    removeall();
+                    $("#quint").css("border", "2px solid whitesmoke");
+                    $("#quint").css("border-radius", "20px");
+                });
+                $("#hex").on("click", function () {
+                    removeall();
+                    $("#hex").css("border", "2px solid whitesmoke");
+                    $("#hex").css("border-radius", "20px");
+                });
+                $("#hept").on("click", function () {
+                    removeall();
+                    $("#hept").css("border", "2px solid whitesmoke");
+                    $("#hept").css("border-radius", "20px");
+                });
+            }
+
+            $("#about").on("mouseover", function () {
+                introAboutLogoTransition();
+            });
+
+            $("input").on("change", function () {
+                $("body").toggleClass("blue");
+            });
+
+            // Light/Dark toggle
+            const checkbox = document.getElementById("checkbox");
+
+            function introAboutLogoTransition() {
+                $("#about-quad").css("top", "70%");
+                $("#about-quad").css("opacity", "1");
+            }
+
+            function checkDarkMode() {
+                if (
+                    localStorage.getItem("tourism_website_darkmode") !== null &&
+                    localStorage.getItem("tourism_website_darkmode") === "true"
+                ) {
+                    document.body.classList.add("dark");
+                    checkbox.checked = true;
+                }
+            }
+            checkDarkMode();
+
+            checkbox.addEventListener("change", () => {
+                document.body.classList.toggle("dark");
+                document.body.classList.contains("dark")
+                    ? localStorage.setItem("tourism_website_darkmode", true)
+                    : localStorage.setItem("tourism_website_darkmode", false);
+            });
+
+            // scroll button
+            let mybutton = document.getElementById("upbtn");
+
+            window.onscroll = function () {
+                scrollFunction();
+            };
+
+            function scrollFunction() {
+                if (
+                    document.body.scrollTop > 20 ||
+                    document.documentElement.scrollTop > 20
+                ) {
+                    mybutton.style.display = "block";
+                } else {
+                    mybutton.style.display = "none";
+                }
+            }
+
+            function topFunction() {
+                document.body.scrollTop = 0;
+                document.documentElement.scrollTop = 0;
+            }
+
+            // Update Navbar While Scrolling
+            function updateNav() {
+                const sections = document.querySelectorAll("section");
+                const navLinks = document.querySelectorAll(".nav-links li a");
+
+                sections.forEach((section, index) => {
+                    const rect = section.getBoundingClientRect();
+
+                    if (window.screen.width <= 425) {
+                        if (rect.top <= 1300) {
+                            navLinks.forEach((navLink) => {
+                                navLink.classList.remove("active");
+                            });
+                            navLinks[index].classList.add("active");
+                        }
+                    } else if (425 <= window.screen.width <= 768) {
+                        if (rect.top <= 1250) {
+                            navLinks.forEach((navLink) => {
+                                navLink.classList.remove("active");
+                            });
+                            navLinks[index].classList.add("active");
+                        }
+                    } else {
+                        if (rect.top <= 1000) {
+                            navLinks.forEach((navLink) => {
+                                navLink.classList.remove("active");
+                            });
+                            navLinks[index].classList.add("active");
+                        }
+                    }
+                });
+            }
+
+            window.addEventListener("scroll", updateNav);
+        </script>
+    </body>
+</html>

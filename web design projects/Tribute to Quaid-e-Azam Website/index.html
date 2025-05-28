@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tribute to Quaid-e-Azam</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, #046A38 0%, #01411C 100%);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            position: relative;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        header h1 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        header p {
+            font-size: 1.2rem;
+            font-style: italic;
+        }
+        
+        /* Navigation */
+        nav {
+            background-color: #01411C;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+        }
+        
+        nav li {
+            margin: 0 15px;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 1rem 0.5rem;
+            display: block;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        nav a:hover {
+            color: #FFD700;
+            transform: translateY(-2px);
+        }
+        
+        /* Hero Section */
+        .hero {
+            height: 70vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://upload.wikimedia.org/wikipedia/commons/4/4e/Muhammad_Ali_Jinnah_1945c.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            margin-bottom: 3rem;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            padding: 2rem;
+            background-color: rgba(1, 65, 28, 0.7);
+            border-radius: 10px;
+        }
+        
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        /* Timeline Section */
+        .timeline {
+            padding: 4rem 0;
+            background-color: white;
+        }
+        
+        .timeline h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #01411C;
+        }
+        
+        .timeline-container {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .timeline-container::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            background-color: #046A38;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -3px;
+        }
+        
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+        }
+        
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            background-color: white;
+            border: 4px solid #FFD700;
+            border-radius: 50%;
+            top: 15px;
+            z-index: 1;
+        }
+        
+        .left {
+            left: 0;
+        }
+        
+        .right {
+            left: 50%;
+        }
+        
+        .left::after {
+            right: -12px;
+        }
+        
+        .right::after {
+            left: -12px;
+        }
+        
+        .timeline-content {
+            padding: 20px;
+            background-color: white;
+            border-radius: 6px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .timeline-content h3 {
+            color: #01411C;
+            margin-bottom: 10px;
+        }
+        
+        /* Gallery Section */
+        .gallery {
+            padding: 4rem 0;
+            background-color: #f9f9f9;
+        }
+        
+        .gallery h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #01411C;
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .gallery-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(1, 65, 28, 0.8);
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+        
+        /* Quotes Section */
+        .quotes {
+            padding: 4rem 0;
+            background-color: white;
+        }
+        
+        .quotes h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #01411C;
+        }
+        
+        .quote-container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .quote {
+            font-size: 1.5rem;
+            font-style: italic;
+            margin-bottom: 2rem;
+            padding: 2rem;
+            background-color: #f9f9f9;
+            border-left: 5px solid #046A38;
+            position: relative;
+        }
+        
+        .quote::before, .quote::after {
+            content: '"';
+            font-size: 3rem;
+            color: #046A38;
+            opacity: 0.3;
+            position: absolute;
+        }
+        
+        .quote::before {
+            top: 10px;
+            left: 10px;
+        }
+        
+        .quote::after {
+            bottom: 10px;
+            right: 10px;
+        }
+        
+        .quote-author {
+            font-weight: bold;
+            color: #01411C;
+        }
+        
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #046A38 0%, #01411C 100%);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+        
+        footer p {
+            margin-bottom: 1rem;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 1rem;
+        }
+        
+        .social-links a {
+            color: white;
+            font-size: 1.5rem;
+            transition: color 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            color: #FFD700;
+        }
+        
+        /* Responsive Design */
+        @media screen and (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            nav li {
+                margin: 5px 0;
+            }
+            
+            .hero h2 {
+                font-size: 1.8rem;
+            }
+            
+            .timeline-container::after {
+                left: 31px;
+            }
+            
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+            
+            .timeline-item::after {
+                left: 18px;
+            }
+            
+            .left::after, .right::after {
+                left: 18px;
+            }
+            
+            .right {
+                left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <h1>Quaid-e-Azam Muhammad Ali Jinnah</h1>
+            <p>1876 - 1948 | Founder of Pakistan</p>
+        </div>
+    </header>
+    
+    <!-- Navigation -->
+    <nav>
+        <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#timeline">Timeline</a></li>
+            <li><a href="#gallery">Gallery</a></li>
+            <li><a href="#quotes">Quotes</a></li>
+        </ul>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section class="hero" id="about">
+        <div class="hero-content">
+            <h2>The Great Leader</h2>
+            <p>Muhammad Ali Jinnah was a barrister, politician, and the founder of Pakistan. He served as the leader of the All-India Muslim League from 1913 until Pakistan's independence on 14 August 1947, and then as Pakistan's first Governor-General until his death.</p>
+        </div>
+    </section>
+    
+    <!-- Timeline Section -->
+    <section class="timeline" id="timeline">
+        <div class="container">
+            <h2>Life Timeline</h2>
+            <div class="timeline-container">
+                <div class="timeline-item left">
+                    <div class="timeline-content">
+                        <h3>December 25, 1876</h3>
+                        <p>Born in Karachi, British India (now Pakistan) to Jinnahbhai Poonja and Mithibai.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item right">
+                    <div class="timeline-content">
+                        <h3>1892</h3>
+                        <p>Married Emibai Jinnah at the age of 16 (arranged marriage).</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item left">
+                    <div class="timeline-content">
+                        <h3>1893</h3>
+                        <p>Went to London to study law at Lincoln's Inn.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item right">
+                    <div class="timeline-content">
+                        <h3>1896</h3>
+                        <p>Became the youngest Indian to be called to the bar in England.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item left">
+                    <div class="timeline-content">
+                        <h3>1906</h3>
+                        <p>Joined the Indian National Congress, beginning his political career.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item right">
+                    <div class="timeline-content">
+                        <h3>1913</h3>
+                        <p>Joined the All-India Muslim League while remaining in Congress.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item left">
+                    <div class="timeline-content">
+                        <h3>1916</h3>
+                        <p>Became president of the Muslim League and worked with Congress leaders for Hindu-Muslim unity.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item right">
+                    <div class="timeline-content">
+                        <h3>1929</h3>
+                        <p>Proposed his Fourteen Points for Muslim political safeguards.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item left">
+                    <div class="timeline-content">
+                        <h3>1934</h3>
+                        <p>Became permanent president of the Muslim League.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item right">
+                    <div class="timeline-content">
+                        <h3>1940</h3>
+                        <p>Presided over the Lahore Resolution which demanded a separate nation for Muslims.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item left">
+                    <div class="timeline-content">
+                        <h3>August 14, 1947</h3>
+                        <p>Pakistan gained independence and Jinnah became its first Governor-General.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item right">
+                    <div class="timeline-content">
+                        <h3>September 11, 1948</h3>
+                        <p>Died in Karachi at the age of 71. Buried in a grand mausoleum in Karachi.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Gallery Section -->
+    <section class="gallery" id="gallery">
+        <div class="container">
+            <h2>Photo Gallery</h2>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="assets/images/quaid4.jpg" alt="Quaid-e-Azam">
+                    <div class="gallery-caption">Quaid-e-Azam - The Founder of Pakistan</div>
+                </div>
+                
+                <div class="gallery-item">
+                    <img src="assets/images/quaid2.jpg" alt="Young Jinnah">
+                    <div class="gallery-caption">Young Muhammad Ali Jinnah</div>
+                </div>
+                
+                <div class="gallery-item">
+                    <img src="assets/images/quaid3.jpg" alt="Jinnah as a Lawyer">
+                    <div class="gallery-caption">Quaid-e-Azam with Fatima Jinnah</div>
+                </div>
+                
+                <div class="gallery-item">
+                    <img src="assets/images/quaid1.jpg" alt="Jinnah with Gandhi">
+                    <div class="gallery-caption">With Mahatma Gandhi</div>
+                </div>
+                
+                <div class="gallery-item">
+                    <img src="assets/images/quaid5.jpg" alt="Jinnah in London">
+                    <div class="gallery-caption">In London, 1931</div>
+                </div>
+                
+                <div class="gallery-item">
+                    <img src="assets/images/quaid6.jpg" alt="Jinnah's Last Days">
+                    <div class="gallery-caption">Last Days as Governor General</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Quotes Section -->
+    <section class="quotes" id="quotes">
+        <div class="container">
+            <h2>Famous Quotes</h2>
+            <div class="quote-container">
+                <div class="quote">
+                    <p>Think a hundred times before you take a decision, but once that decision is taken, stand by it as one man.</p>
+                    <p class="quote-author">- Quaid-e-Azam</p>
+                </div>
+                
+                <div class="quote">
+                    <p>With faith, discipline and selfless devotion to duty, there is nothing worthwhile that you cannot achieve.</p>
+                    <p class="quote-author">- Quaid-e-Azam</p>
+                </div>
+                
+                <div class="quote">
+                    <p>Failure is a word unknown to me.</p>
+                    <p class="quote-author">- Quaid-e-Azam</p>
+                </div>
+                
+                <div class="quote">
+                    <p>You are free; you are free to go to your temples, you are free to go to your mosques or to any other place of worship in this State of Pakistan. You may belong to any religion or caste or creed — that has nothing to do with the business of the State.</p>
+                    <p class="quote-author">- Quaid-e-Azam</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>In memory of the Father of the Nation</p>
+            <p>© 2023 Tribute to Quaid-e-Azam | All Rights Reserved</p>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                window.scrollTo({
+                    top: targetElement.offsetTop - 70,
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // Image gallery modal (would need additional HTML/CSS)
+        document.querySelectorAll('.gallery-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const imgSrc = this.querySelector('img').src;
+                const caption = this.querySelector('.gallery-caption').textContent;
+                
+                // In a real implementation, you would show a modal here
+                alert(`Viewing: ${caption}\nImage URL: ${imgSrc}`);
+            });
+        });
+        
+        // Dynamic year in footer
+        document.querySelector('footer p:nth-child(2)').textContent = 
+            `© ${new Date().getFullYear()} Tribute to Quaid-e-Azam | All Rights Reserved`;
+            
+        // Preload images for better user experience
+        window.addEventListener('load', function() {
+            const imageUrls = [
+                'assets/images/quaid1.jpg',
+                'assets/images/quaid2.jpg',
+                'assets/images/quaid3.jpg',
+                'assets/images/quaid4.jpg',
+                'assets/images/quaid5.jpg',
+                'assets/images/quaid6.jpg'
+            ];
+            
+            imageUrls.forEach(url => {
+                const img = new Image();
+                img.src = url;
+            });
+        });
+    </script>
+</body>
+</html>

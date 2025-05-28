@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amazon Clone</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #EAEDED;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* Header Styles */
+        .navbar {
+            background-color: #131921;
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar-logo {
+            width: 100px;
+            margin-right: 20px;
+        }
+
+        .navbar-logo img {
+            width: 100%;
+        }
+
+        .navbar-address {
+            display: flex;
+            margin-right: 20px;
+            cursor: pointer;
+        }
+
+        .address-icon {
+            margin-right: 5px;
+        }
+
+        .address-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .address-text-1 {
+            font-size: 12px;
+            color: #CCCCCC;
+        }
+
+        .address-text-2 {
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .navbar-search {
+            display: flex;
+            flex: 1;
+            min-width: 200px;
+            margin-right: 20px;
+        }
+
+        .search-select {
+            background-color: #F3F3F3;
+            border: none;
+            border-radius: 4px 0 0 4px;
+            padding: 10px;
+            font-size: 12px;
+            color: #555;
+            border-right: 1px solid #DDD;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            font-size: 14px;
+        }
+
+        .search-icon {
+            background-color: #FEBD69;
+            color: #111;
+            padding: 10px 15px;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+        }
+
+        .search-icon:hover {
+            background-color: #F3A847;
+        }
+
+        .navbar-lang {
+            display: flex;
+            align-items: center;
+            margin-right: 20px;
+            cursor: pointer;
+        }
+
+        .lang-flag {
+            width: 20px;
+            margin-right: 5px;
+        }
+
+        .lang-text {
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .navbar-account {
+            margin-right: 20px;
+            cursor: pointer;
+        }
+
+        .account-text-1 {
+            font-size: 12px;
+        }
+
+        .account-text-2 {
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .navbar-returns {
+            margin-right: 20px;
+            cursor: pointer;
+        }
+
+        .returns-text-1 {
+            font-size: 12px;
+        }
+
+        .returns-text-2 {
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .navbar-cart {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .cart-icon {
+            font-size: 30px;
+        }
+
+        .cart-text {
+            font-size: 14px;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+
+        .cart-count {
+            color: #F08804;
+            font-size: 16px;
+            font-weight: bold;
+            position: relative;
+            top: -15px;
+            left: -10px;
+        }
+
+        /* Secondary Navbar */
+        .secondary-navbar {
+            background-color: #232F3E;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            margin-right: 15px;
+            cursor: pointer;
+        }
+
+        .nav-menu-icon {
+            margin-right: 5px;
+        }
+
+        .nav-menu-text {
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+
+        .nav-link {
+            margin-right: 15px;
+            font-size: 14px;
+            cursor: pointer;
+            padding: 5px 0;
+        }
+
+        .nav-link:hover {
+            border: 1px solid white;
+            border-radius: 2px;
+            padding: 4px 8px;
+        }
+
+        .nav-deals {
+            margin-left: auto;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 300px;
+            background-image: url('https://m.media-amazon.com/images/I/61CiqVTRBEL._SX3000_.jpg');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            margin-bottom: -150px;
+            z-index: 1;
+        }
+
+        /* Shop Section */
+        .shop-section {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-evenly;
+            padding: 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .shop-box {
+            width: 23%;
+            min-width: 250px;
+            height: 400px;
+            background-color: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .shop-box-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .shop-box-img {
+            height: 300px;
+            background-size: cover;
+            background-position: center;
+            margin-bottom: 15px;
+            flex: 1;
+        }
+
+        .shop-box-link {
+            color: #007185;
+            font-size: 14px;
+        }
+
+        .shop-box-link:hover {
+            color: #C7511F;
+            text-decoration: underline;
+        }
+
+        /* Footer */
+        .footer-back-to-top {
+            background-color: #37475A;
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+        .footer-back-to-top:hover {
+            background-color: #485769;
+        }
+
+        .footer-links {
+            background-color: #232F3E;
+            color: white;
+            padding: 40px 0;
+            display: flex;
+            justify-content: space-evenly;
+            flex-wrap: wrap;
+        }
+
+        .footer-column {
+            min-width: 200px;
+            margin-bottom: 20px;
+        }
+
+        .footer-column-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .footer-column-list {
+            list-style: none;
+        }
+
+        .footer-column-item {
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: #DDD;
+            cursor: pointer;
+        }
+
+        .footer-column-item:hover {
+            text-decoration: underline;
+        }
+
+        .footer-bottom {
+            background-color: #131A22;
+            color: #DDD;
+            padding: 20px 0;
+            text-align: center;
+            font-size: 12px;
+        }
+
+        .footer-logo {
+            width: 80px;
+            margin: 20px auto;
+        }
+
+        .footer-links-bottom {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .footer-link-bottom {
+            margin: 0 10px;
+            cursor: pointer;
+        }
+
+        .footer-link-bottom:hover {
+            text-decoration: underline;
+        }
+
+        .footer-copyright {
+            color: #999;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .navbar-search {
+                order: 1;
+                flex: 100%;
+                margin: 15px 0;
+            }
+            
+            .hero {
+                margin-bottom: -100px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                justify-content: space-between;
+            }
+            
+            .navbar-logo, .navbar-address, .navbar-lang, 
+            .navbar-account, .navbar-returns, .navbar-cart {
+                margin: 5px 0;
+            }
+            
+            .secondary-navbar {
+                justify-content: center;
+            }
+            
+            .nav-deals {
+                margin-left: 0;
+                margin-top: 10px;
+            }
+            
+            .shop-box {
+                width: 48%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .shop-box {
+                width: 100%;
+            }
+            
+            .footer-column {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <!-- Top Navbar -->
+        <div class="navbar">
+            <div class="navbar-logo">
+                <img src="https://pngimg.com/uploads/amazon/amazon_PNG11.png" alt="Amazon Logo">
+            </div>
+            
+            <div class="navbar-address">
+                <div class="address-icon">
+                    <i class="fas fa-map-marker-alt"></i>
+                </div>
+                <div class="address-text">
+                    <div class="address-text-1">Deliver to</div>
+                    <div class="address-text-2">United States</div>
+                </div>
+            </div>
+            
+            <div class="navbar-search">
+                <select class="search-select">
+                    <option>All</option>
+                    <option>Alexa Skills</option>
+                    <option>Amazon Devices</option>
+                    <option>Amazon Fresh</option>
+                    <option>Amazon Pharmacy</option>
+                    <option>Appliances</option>
+                    <option>Apps & Games</option>
+                </select>
+                <input type="text" class="search-input" placeholder="Search Amazon">
+                <div class="search-icon">
+                    <i class="fas fa-search"></i>
+                </div>
+            </div>
+            
+            <div class="navbar-lang">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Flag_of_the_United_States.svg/125px-Flag_of_the_United_States.svg.png" class="lang-flag">
+                <div class="lang-text">EN</div>
+            </div>
+            
+            <div class="navbar-account">
+                <div class="account-text-1">Hello, Sign in</div>
+                <div class="account-text-2">Account & Lists</div>
+            </div>
+            
+            <div class="navbar-returns">
+                <div class="returns-text-1">Returns</div>
+                <div class="returns-text-2">& Orders</div>
+            </div>
+            
+            <div class="navbar-cart">
+                <div class="cart-icon">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">0</span>
+                </div>
+                <div class="cart-text">Cart</div>
+            </div>
+        </div>
+        
+        <!-- Secondary Navbar -->
+        <div class="secondary-navbar">
+            <div class="nav-menu">
+                <div class="nav-menu-icon">
+                    <i class="fas fa-bars"></i>
+                </div>
+                <div class="nav-menu-text">All</div>
+            </div>
+            
+            <ul class="nav-links">
+                <li class="nav-link">Today's Deals</li>
+                <li class="nav-link">Customer Service</li>
+                <li class="nav-link">Registry</li>
+                <li class="nav-link">Gift Cards</li>
+                <li class="nav-link">Sell</li>
+            </ul>
+            
+            <div class="nav-deals">Shop deals in Electronics</div>
+        </div>
+    </header>
+    
+    <!-- Hero Section -->
+    <div class="hero"></div>
+    
+    <!-- Shop Section -->
+    <div class="shop-section">
+        <div class="shop-box">
+            <h2 class="shop-box-title">Gaming accessories</h2>
+            <div class="shop-box-img" style="background-image: url('https://m.media-amazon.com/images/I/61CqYq+xwNL._AC_SY400_.jpg');"></div>
+            <a href="#" class="shop-box-link">See more</a>
+        </div>
+        
+        <div class="shop-box">
+            <h2 class="shop-box-title">Electronics</h2>
+            <div class="shop-box-img" style="background-image: url('https://m.media-amazon.com/images/I/71S8qt+K8hL._AC_SY400_.jpg');"></div>
+            <a href="#" class="shop-box-link">Shop now</a>
+        </div>
+        
+        <div class="shop-box">
+            <h2 class="shop-box-title">Home refresh ideas</h2>
+            <div class="shop-box-img" style="background-image: url('https://m.media-amazon.com/images/I/61DUO0NqyyL._AC_SY400_.jpg');"></div>
+            <a href="#" class="shop-box-link">Shop kitchen upgrades</a>
+        </div>
+        
+        <div class="shop-box">
+            <h2 class="shop-box-title">Health & Personal Care</h2>
+            <div class="shop-box-img" style="background-image: url('https://m.media-amazon.com/images/I/71Ie3JXGfVL._AC_SY400_.jpg');"></div>
+            <a href="#" class="shop-box-link">Shop now</a>
+        </div>
+        
+        <div class="shop-box">
+            <h2 class="shop-box-title">New arrivals in Toys</h2>
+            <div class="shop-box-img" style="background-image: url('https://m.media-amazon.com/images/I/71i6oVhL1QL._AC_SY400_.jpg');"></div>
+            <a href="#" class="shop-box-link">Shop now</a>
+        </div>
+        
+        <div class="shop-box">
+            <h2 class="shop-box-title">Discover fashion trends</h2>
+            <div class="shop-box-img" style="background-image: url('https://m.media-amazon.com/images/I/71Kkm6b2JbL._AC_SY400_.jpg');"></div>
+            <a href="#" class="shop-box-link">See more</a>
+        </div>
+        
+        <div class="shop-box">
+            <h2 class="shop-box-title">For your Fitness Needs</h2>
+            <div class="shop-box-img" style="background-image: url('https://m.media-amazon.com/images/I/61L5QgPvgqL._AC_SY400_.jpg');"></div>
+            <a href="#" class="shop-box-link">Shop health & fitness</a>
+        </div>
+        
+        <div class="shop-box">
+            <h2 class="shop-box-title">Home & Kitchen Under $30</h2>
+            <div class="shop-box-img" style="background-image: url('https://m.media-amazon.com/images/I/61LNnZPoKPS._AC_SY400_.jpg');"></div>
+            <a href="#" class="shop-box-link">Shop now</a>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-back-to-top">
+            Back to top
+        </div>
+        
+        <div class="footer-links">
+            <div class="footer-column">
+                <div class="footer-column-title">Get to Know Us</div>
+                <ul class="footer-column-list">
+                    <li class="footer-column-item">Careers</li>
+                    <li class="footer-column-item">Blog</li>
+                    <li class="footer-column-item">About Amazon</li>
+                    <li class="footer-column-item">Investor Relations</li>
+                    <li class="footer-column-item">Amazon Devices</li>
+                    <li class="footer-column-item">Amazon Science</li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <div class="footer-column-title">Make Money with Us</div>
+                <ul class="footer-column-list">
+                    <li class="footer-column-item">Sell products on Amazon</li>
+                    <li class="footer-column-item">Sell on Amazon Business</li>
+                    <li class="footer-column-item">Sell apps on Amazon</li>
+                    <li class="footer-column-item">Become an Affiliate</li>
+                    <li class="footer-column-item">Advertise Your Products</li>
+                    <li class="footer-column-item">Self-Publish with Us</li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <div class="footer-column-title">Amazon Payment Products</div>
+                <ul class="footer-column-list">
+                    <li class="footer-column-item">Amazon Business Card</li>
+                    <li class="footer-column-item">Shop with Points</li>
+                    <li class="footer-column-item">Reload Your Balance</li>
+                    <li class="footer-column-item">Amazon Currency Converter</li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <div class="footer-column-title">Let Us Help You</div>
+                <ul class="footer-column-list">
+                    <li class="footer-column-item">Amazon and COVID-19</li>
+                    <li class="footer-column-item">Your Account</li>
+                    <li class="footer-column-item">Your Orders</li>
+                    <li class="footer-column-item">Shipping Rates & Policies</li>
+                    <li class="footer-column-item">Returns & Replacements</li>
+                    <li class="footer-column-item">Manage Your Content and Devices</li>
+                    <li class="footer-column-item">Amazon Assistant</li>
+                    <li class="footer-column-item">Help</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <div class="footer-logo">
+                <img src="https://pngimg.com/uploads/amazon/amazon_PNG11.png" alt="Amazon Logo">
+            </div>
+            
+            <div class="footer-links-bottom">
+                <div class="footer-link-bottom">Conditions of Use</div>
+                <div class="footer-link-bottom">Privacy Notice</div>
+                <div class="footer-link-bottom">Interest-Based Ads</div>
+            </div>
+            
+            <div class="footer-copyright">
+                © 1996-2023, Amazon.com, Inc. or its affiliates
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simple JavaScript for interactive elements
+        document.addEventListener('DOMContentLoaded', function() {
+            // Back to top button
+            document.querySelector('.footer-back-to-top').addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+            
+            // Cart count (simulated)
+            const cartCount = document.querySelector('.cart-count');
+            let count = 0;
+            
+            // Simulate adding items to cart (for demo purposes)
+            setInterval(function() {
+                if (count < 10 && Math.random() > 0.7) {
+                    count++;
+                    cartCount.textContent = count;
+                }
+            }, 3000);
+            
+            // Responsive navbar toggle (simplified)
+            const menuIcon = document.querySelector('.nav-menu-icon');
+            menuIcon.addEventListener('click', function() {
+                alert('Menu would open in a real implementation');
+            });
+            
+            // Search functionality (simplified)
+            const searchInput = document.querySelector('.search-input');
+            const searchIcon = document.querySelector('.search-icon');
+            
+            searchIcon.addEventListener('click', function() {
+                if (searchInput.value.trim() !== '') {
+                    alert(`Searching for: ${searchInput.value}`);
+                }
+            });
+            
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter' && searchInput.value.trim() !== '') {
+                    alert(`Searching for: ${searchInput.value}`);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

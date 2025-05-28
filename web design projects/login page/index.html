@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Login System</title>
+    <style>
+        :root {
+            --primary: #4a6bff;
+            --secondary: #f8f9fa;
+            --dark: #212529;
+            --light: #f8f9fa;
+            --danger: #dc3545;
+            --success: #28a745;
+            --warning: #ffc107;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            color: var(--dark);
+            line-height: 1.6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .auth-container {
+            width: 100%;
+            max-width: 400px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            margin: 20px;
+        }
+
+        .auth-header {
+            background: linear-gradient(135deg, #4a6bff 0%, #3a5bef 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .auth-header h2 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .auth-body {
+            padding: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #3a5bef;
+        }
+
+        .btn-block {
+            display: block;
+            width: 100%;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .mt-3 {
+            margin-top: 15px;
+        }
+
+        .mb-3 {
+            margin-bottom: 15px;
+        }
+
+        .auth-footer {
+            padding: 15px;
+            background-color: #f8f9fa;
+            text-align: center;
+            border-top: 1px solid #eee;
+        }
+
+        .auth-footer a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .auth-footer a:hover {
+            text-decoration: underline;
+        }
+
+        .error-message {
+            color: var(--danger);
+            font-size: 0.9rem;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .success-message {
+            color: var(--success);
+            font-size: 0.9rem;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .password-strength {
+            height: 5px;
+            background-color: #eee;
+            border-radius: 5px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+
+        .strength-meter {
+            height: 100%;
+            width: 0;
+            transition: width 0.3s, background-color 0.3s;
+        }
+
+        .show-password {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .show-password input {
+            margin-right: 8px;
+        }
+
+        .auth-switch {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        /* Dashboard styles */
+        .dashboard {
+            display: none;
+            width: 100%;
+            max-width: 800px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            margin: 20px;
+        }
+
+        .dashboard-header {
+            background: linear-gradient(135deg, #4a6bff 0%, #3a5bef 100%);
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .dashboard-body {
+            padding: 30px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .user-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: #eee;
+            margin-right: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2rem;
+            color: var(--primary);
+        }
+
+        .user-details h3 {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+
+        .user-details p {
+            color: var(--gray);
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .stat-card h4 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+
+        .stat-card p {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .logout-btn {
+            background-color: var(--danger);
+        }
+
+        .logout-btn:hover {
+            background-color: #c82333;
+        }
+
+        /* Loading spinner */
+        .spinner {
+            display: none;
+            width: 40px;
+            height: 40px;
+            margin: 0 auto;
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-radius: 50%;
+            border-top: 4px solid var(--primary);
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 576px) {
+            .auth-container {
+                margin: 10px;
+            }
+
+            .dashboard {
+                margin: 10px;
+            }
+
+            .user-info {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .user-avatar {
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Form -->
+    <div class="auth-container" id="login-container">
+        <div class="auth-header">
+            <h2>Welcome Back</h2>
+            <p>Please login to your account</p>
+        </div>
+        <div class="auth-body">
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="login-email">Email Address</label>
+                    <input type="email" id="login-email" class="form-control" required>
+                    <div class="error-message" id="login-email-error">Please enter a valid email address</div>
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Password</label>
+                    <input type="password" id="login-password" class="form-control" required>
+                    <div class="error-message" id="login-password-error">Password must be at least 6 characters</div>
+                </div>
+                <div class="show-password">
+                    <input type="checkbox" id="show-login-password">
+                    <label for="show-login-password">Show password</label>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-block" id="login-btn">Login</button>
+                    <div class="spinner" id="login-spinner"></div>
+                </div>
+                <div class="success-message" id="login-success"></div>
+                <div class="error-message" id="login-error"></div>
+            </form>
+            <div class="auth-footer">
+                <a href="#" id="forgot-password-link">Forgot password?</a>
+                <div class="auth-switch">
+                    Don't have an account? <a href="#" id="show-register-link">Register</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Form -->
+    <div class="auth-container" id="register-container" style="display: none;">
+        <div class="auth-header">
+            <h2>Create Account</h2>
+            <p>Join us today</p>
+        </div>
+        <div class="auth-body">
+            <form id="register-form">
+                <div class="form-group">
+                    <label for="register-name">Full Name</label>
+                    <input type="text" id="register-name" class="form-control" required>
+                    <div class="error-message" id="register-name-error">Please enter your full name</div>
+                </div>
+                <div class="form-group">
+                    <label for="register-email">Email Address</label>
+                    <input type="email" id="register-email" class="form-control" required>
+                    <div class="error-message" id="register-email-error">Please enter a valid email address</div>
+                </div>
+                <div class="form-group">
+                    <label for="register-password">Password</label>
+                    <input type="password" id="register-password" class="form-control" required>
+                    <div class="password-strength">
+                        <div class="strength-meter" id="password-strength-meter"></div>
+                    </div>
+                    <div class="error-message" id="register-password-error">Password must be at least 8 characters with numbers and symbols</div>
+                </div>
+                <div class="form-group">
+                    <label for="register-confirm-password">Confirm Password</label>
+                    <input type="password" id="register-confirm-password" class="form-control" required>
+                    <div class="error-message" id="register-confirm-password-error">Passwords do not match</div>
+                </div>
+                <div class="show-password">
+                    <input type="checkbox" id="show-register-password">
+                    <label for="show-register-password">Show password</label>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-block" id="register-btn">Register</button>
+                    <div class="spinner" id="register-spinner"></div>
+                </div>
+                <div class="success-message" id="register-success"></div>
+                <div class="error-message" id="register-error"></div>
+            </form>
+            <div class="auth-footer">
+                <div class="auth-switch">
+                    Already have an account? <a href="#" id="show-login-link">Login</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Forgot Password Form -->
+    <div class="auth-container" id="forgot-password-container" style="display: none;">
+        <div class="auth-header">
+            <h2>Reset Password</h2>
+            <p>Enter your email to receive a reset link</p>
+        </div>
+        <div class="auth-body">
+            <form id="forgot-password-form">
+                <div class="form-group">
+                    <label for="forgot-email">Email Address</label>
+                    <input type="email" id="forgot-email" class="form-control" required>
+                    <div class="error-message" id="forgot-email-error">Please enter a valid email address</div>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-block" id="reset-btn">Send Reset Link</button>
+                    <div class="spinner" id="reset-spinner"></div>
+                </div>
+                <div class="success-message" id="reset-success"></div>
+                <div class="error-message" id="reset-error"></div>
+            </form>
+            <div class="auth-footer">
+                <a href="#" id="back-to-login-link">Back to login</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard (shown after successful login) -->
+    <div class="dashboard" id="dashboard">
+        <div class="dashboard-header">
+            <h2>Dashboard</h2>
+            <button class="btn logout-btn" id="logout-btn">Logout</button>
+        </div>
+        <div class="dashboard-body">
+            <div class="user-info">
+                <div class="user-avatar" id="user-avatar">JD</div>
+                <div class="user-details">
+                    <h3 id="dashboard-name">John Doe</h3>
+                    <p id="dashboard-email">john@example.com</p>
+                </div>
+            </div>
+            <div class="stats">
+                <div class="stat-card">
+                    <h4>Total Logins</h4>
+                    <p id="login-count">12</p>
+                </div>
+                <div class="stat-card">
+                    <h4>Account Created</h4>
+                    <p id="account-created">May 15, 2023</p>
+                </div>
+                <div class="stat-card">
+                    <h4>Last Login</h4>
+                    <p id="last-login">Today, 10:30 AM</p>
+                </div>
+            </div>
+            <div class="text-center">
+                <button class="btn" id="change-password-btn">Change Password</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // DOM Elements
+            const loginContainer = document.getElementById('login-container');
+            const registerContainer = document.getElementById('register-container');
+            const forgotPasswordContainer = document.getElementById('forgot-password-container');
+            const dashboard = document.getElementById('dashboard');
+            
+            // Form elements
+            const loginForm = document.getElementById('login-form');
+            const registerForm = document.getElementById('register-form');
+            const forgotPasswordForm = document.getElementById('forgot-password-form');
+            
+            // Links for switching between forms
+            const showRegisterLink = document.getElementById('show-register-link');
+            const showLoginLink = document.getElementById('show-login-link');
+            const forgotPasswordLink = document.getElementById('forgot-password-link');
+            const backToLoginLink = document.getElementById('back-to-login-link');
+            
+            // Logout button
+            const logoutBtn = document.getElementById('logout-btn');
+            
+            // Simulated database
+            let users = JSON.parse(localStorage.getItem('users')) || [];
+            let currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
+            
+            // Check if user is already logged in
+            if (currentUser) {
+                showDashboard(currentUser);
+            }
+            
+            // Show register form
+            showRegisterLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                loginContainer.style.display = 'none';
+                registerContainer.style.display = 'block';
+                forgotPasswordContainer.style.display = 'none';
+                resetForms();
+            });
+            
+            // Show login form
+            showLoginLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                loginContainer.style.display = 'block';
+                registerContainer.style.display = 'none';
+                forgotPasswordContainer.style.display = 'none';
+                resetForms();
+            });
+            
+            // Show forgot password form
+            forgotPasswordLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                loginContainer.style.display = 'none';
+                registerContainer.style.display = 'none';
+                forgotPasswordContainer.style.display = 'block';
+                resetForms();
+            });
+            
+            // Back to login from forgot password
+            backToLoginLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                loginContainer.style.display = 'block';
+                registerContainer.style.display = 'none';
+                forgotPasswordContainer.style.display = 'none';
+                resetForms();
+            });
+            
+            // Login form submission
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const email = document.getElementById('login-email').value.trim();
+                const password = document.getElementById('login-password').value;
+                
+                if (validateLoginForm(email, password)) {
+                    loginUser(email, password);
+                }
+            });
+            
+            // Register form submission
+            registerForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const name = document.getElementById('register-name').value.trim();
+                const email = document.getElementById('register-email').value.trim();
+                const password = document.getElementById('register-password').value;
+                const confirmPassword = document.getElementById('register-confirm-password').value;
+                
+                if (validateRegisterForm(name, email, password, confirmPassword)) {
+                    registerUser(name, email, password);
+                }
+            });
+            
+            // Forgot password form submission
+            forgotPasswordForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const email = document.getElementById('forgot-email').value.trim();
+                
+                if (validateEmail(email, 'forgot-email-error')) {
+                    sendResetLink(email);
+                }
+            });
+            
+            // Logout
+            logoutBtn.addEventListener('click', function() {
+                localStorage.removeItem('currentUser');
+                location.reload();
+            });
+            
+            // Show/hide password functionality
+            document.getElementById('show-login-password').addEventListener('change', function() {
+                const passwordField = document.getElementById('login-password');
+                passwordField.type = this.checked ? 'text' : 'password';
+            });
+            
+            document.getElementById('show-register-password').addEventListener('change', function() {
+                const passwordField = document.getElementById('register-password');
+                const confirmPasswordField = document.getElementById('register-confirm-password');
+                passwordField.type = this.checked ? 'text' : 'password';
+                confirmPasswordField.type = this.checked ? 'text' : 'password';
+            });
+            
+            // Password strength meter
+            document.getElementById('register-password').addEventListener('input', function() {
+                updatePasswordStrength(this.value);
+            });
+            
+            // Change password button
+            document.getElementById('change-password-btn').addEventListener('click', function() {
+                alert('Password change functionality would be implemented here');
+            });
+            
+            // Form validation functions
+            function validateLoginForm(email, password) {
+                let isValid = true;
+                
+                // Validate email
+                if (!validateEmail(email, 'login-email-error')) {
+                    isValid = false;
+                }
+                
+                // Validate password
+                if (password.length < 6) {
+                    document.getElementById('login-password-error').style.display = 'block';
+                    isValid = false;
+                } else {
+                    document.getElementById('login-password-error').style.display = 'none';
+                }
+                
+                return isValid;
+            }
+            
+            function validateRegisterForm(name, email, password, confirmPassword) {
+                let isValid = true;
+                
+                // Validate name
+                if (name.length < 2) {
+                    document.getElementById('register-name-error').style.display = 'block';
+                    isValid = false;
+                } else {
+                    document.getElementById('register-name-error').style.display = 'none';
+                }
+                
+                // Validate email
+                if (!validateEmail(email, 'register-email-error')) {
+                    isValid = false;
+                }
+                
+                // Check if email already exists
+                if (users.some(user => user.email === email)) {
+                    document.getElementById('register-email-error').textContent = 'Email already registered';
+                    document.getElementById('register-email-error').style.display = 'block';
+                    isValid = false;
+                }
+                
+                // Validate password
+                if (password.length < 8) {
+                    document.getElementById('register-password-error').textContent = 'Password must be at least 8 characters';
+                    document.getElementById('register-password-error').style.display = 'block';
+                    isValid = false;
+                } else if (!/\d/.test(password) || !/[!@#$%^&*]/.test(password)) {
+                    document.getElementById('register-password-error').textContent = 'Password must contain numbers and symbols';
+                    document.getElementById('register-password-error').style.display = 'block';
+                    isValid = false;
+                } else {
+                    document.getElementById('register-password-error').style.display = 'none';
+                }
+                
+                // Validate confirm password
+                if (password !== confirmPassword) {
+                    document.getElementById('register-confirm-password-error').style.display = 'block';
+                    isValid = false;
+                } else {
+                    document.getElementById('register-confirm-password-error').style.display = 'none';
+                }
+                
+                return isValid;
+            }
+            
+            function validateEmail(email, errorElementId) {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                
+                if (!emailRegex.test(email)) {
+                    document.getElementById(errorElementId).style.display = 'block';
+                    return false;
+                } else {
+                    document.getElementById(errorElementId).style.display = 'none';
+                    return true;
+                }
+            }
+            
+            // Update password strength meter
+            function updatePasswordStrength(password) {
+                const strengthMeter = document.getElementById('password-strength-meter');
+                let strength = 0;
+                
+                // Length check
+                if (password.length >= 8) strength += 1;
+                if (password.length >= 12) strength += 1;
+                
+                // Contains numbers
+                if (/\d/.test(password)) strength += 1;
+                
+                // Contains special chars
+                if (/[!@#$%^&*]/.test(password)) strength += 1;
+                
+                // Contains uppercase and lowercase
+                if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength += 1;
+                
+                // Update meter
+                const width = (strength / 5) * 100;
+                strengthMeter.style.width = `${width}%`;
+                
+                // Update color
+                if (strength <= 2) {
+                    strengthMeter.style.backgroundColor = 'var(--danger)';
+                } else if (strength <= 4) {
+                    strengthMeter.style.backgroundColor = 'var(--warning)';
+                } else {
+                    strengthMeter.style.backgroundColor = 'var(--success)';
+                }
+            }
+            
+            // User authentication functions
+            function loginUser(email, password) {
+                toggleSpinner('login-spinner', true);
+                document.getElementById('login-error').style.display = 'none';
+                
+                // Simulate API call delay
+                setTimeout(() => {
+                    const user = users.find(user => user.email === email && user.password === password);
+                    
+                    if (user) {
+                        // Update last login
+                        user.lastLogin = new Date().toISOString();
+                        user.loginCount = (user.loginCount || 0) + 1;
+                        localStorage.setItem('users', JSON.stringify(users));
+                        
+                        // Set current user
+                        currentUser = user;
+                        localStorage.setItem('currentUser', JSON.stringify(user));
+                        
+                        // Show success and redirect to dashboard
+                        document.getElementById('login-success').textContent = 'Login successful!';
+                        document.getElementById('login-success').style.display = 'block';
+                        
+                        setTimeout(() => {
+                            showDashboard(user);
+                        }, 1000);
+                    } else {
+                        document.getElementById('login-error').textContent = 'Invalid email or password';
+                        document.getElementById('login-error').style.display = 'block';
+                    }
+                    
+                    toggleSpinner('login-spinner', false);
+                }, 1000);
+            }
+            
+            function registerUser(name, email, password) {
+                toggleSpinner('register-spinner', true);
+                document.getElementById('register-error').style.display = 'none';
+                
+                // Simulate API call delay
+                setTimeout(() => {
+                    const newUser = {
+                        id: Date.now().toString(),
+                        name,
+                        email,
+                        password, // In a real app, this would be hashed
+                        createdAt: new Date().toISOString(),
+                        loginCount: 0
+                    };
+                    
+                    users.push(newUser);
+                    localStorage.setItem('users', JSON.stringify(users));
+                    
+                    // Show success and switch to login
+                    document.getElementById('register-success').textContent = 'Registration successful! You can now login.';
+                    document.getElementById('register-success').style.display = 'block';
+                    
+                    setTimeout(() => {
+                        loginContainer.style.display = 'block';
+                        registerContainer.style.display = 'none';
+                        resetForms();
+                    }, 1500);
+                    
+                    toggleSpinner('register-spinner', false);
+                }, 1000);
+            }
+            
+            function sendResetLink(email) {
+                toggleSpinner('reset-spinner', true);
+                document.getElementById('reset-error').style.display = 'none';
+                
+                // Simulate API call delay
+                setTimeout(() => {
+                    const userExists = users.some(user => user.email === email);
+                    
+                    if (userExists) {
+                        document.getElementById('reset-success').textContent = 'Password reset link sent to your email';
+                        document.getElementById('reset-success').style.display = 'block';
+                        
+                        setTimeout(() => {
+                            loginContainer.style.display = 'block';
+                            forgotPasswordContainer.style.display = 'none';
+                            resetForms();
+                        }, 1500);
+                    } else {
+                        document.getElementById('reset-error').textContent = 'No account found with that email';
+                        document.getElementById('reset-error').style.display = 'block';
+                    }
+                    
+                    toggleSpinner('reset-spinner', false);
+                }, 1000);
+            }
+            
+            // Show dashboard
+            function showDashboard(user) {
+                loginContainer.style.display = 'none';
+                registerContainer.style.display = 'none';
+                forgotPasswordContainer.style.display = 'none';
+                dashboard.style.display = 'block';
+                
+                // Update user info
+                document.getElementById('dashboard-name').textContent = user.name;
+                document.getElementById('dashboard-email').textContent = user.email;
+                document.getElementById('user-avatar').textContent = getInitials(user.name);
+                document.getElementById('login-count').textContent = user.loginCount || 1;
+                
+                // Format dates
+                const createdDate = new Date(user.createdAt);
+                document.getElementById('account-created').textContent = createdDate.toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
+                
+                const lastLogin = user.lastLogin ? new Date(user.lastLogin) : new Date();
+                document.getElementById('last-login').textContent = lastLogin.toLocaleString('en-US', {
+                    weekday: 'long',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+            }
+            
+            // Helper functions
+            function getInitials(name) {
+                return name.split(' ').map(part => part[0]).join('').toUpperCase();
+            }
+            
+            function toggleSpinner(spinnerId, show) {
+                const spinner = document.getElementById(spinnerId);
+                const button = spinner.previousElementSibling;
+                
+                if (show) {
+                    button.style.display = 'none';
+                    spinner.style.display = 'block';
+                } else {
+                    button.style.display = 'block';
+                    spinner.style.display = 'none';
+                }
+            }
+            
+            function resetForms() {
+                // Reset all forms
+                loginForm.reset();
+                registerForm.reset();
+                forgotPasswordForm.reset();
+                
+                // Hide all messages
+                document.querySelectorAll('.error-message, .success-message').forEach(el => {
+                    el.style.display = 'none';
+                });
+                
+                // Reset password strength meter
+                document.getElementById('password-strength-meter').style.width = '0';
+            }
+        });
+    </script>
+</body>
+</html>
