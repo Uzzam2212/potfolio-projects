@@ -1,7 +1,7 @@
 # Welcome to Uzzam's Portfolio Projects
 
 <p align="center">
-  <img src="https://github.com/Uzzam2212/potfolio-projects/blob/main/WhatsApp%20Image%202025-05-28%20at%2002.37.46_0399068e.jpg?raw=true" alt="Uzzam's Profile Image" width="250" height="250" />
+  <img src="https://github.com/Uzzam2212/potfolio-projects/blob/main/WhatsApp%20Image%202025-05-28%20at%2002.54.38_a1c5e34e.jpg" alt="Uzzam's Profile Image" width="250" height="250" />
 </p>
 
 <p align="center">
